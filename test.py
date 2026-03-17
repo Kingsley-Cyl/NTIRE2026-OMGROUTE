@@ -21,10 +21,10 @@ def select_model(args, device):
     #     name = f"{model_id:02}_DAT_baseline"
     #     model_path = os.path.join('model_zoo', 'team00_dat.pth')
     #     model_func = DAT
-    if model_id == 15:
-        from models.team15_OMGROUTE import omgsr_inference
+    if model_id == 21:
+        from models.team21_OMGROUTE import omgsr_inference
         name = f"{model_id:02}_OMGSR_s_512"
-        model_path = os.path.join('model_zoo', 'team15_OMGROUTE') 
+        model_path = os.path.join('model_zoo', 'team21_OMGROUTE') 
         model_func = omgsr_inference
     else:
         raise NotImplementedError(f"Model {model_id} is not implemented.")
@@ -100,5 +100,5 @@ if __name__ == "__main__":
     main(args)
 
 '''
-CUDA_VISIBLE_DEVICES=6 python test.py --test_dir /home/jiacheng/Cyl/Dataset/NTIRE-2026-SR/test --save_dir ./results --model_id 15
+CUDA_VISIBLE_DEVICES=6 python test.py --test_dir /home/jiacheng/Cyl/Dataset/NTIRE-2026-SR/test --save_dir ./results --model_id 21
 '''

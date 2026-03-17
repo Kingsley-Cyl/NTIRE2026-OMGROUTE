@@ -213,5 +213,5 @@ __marimo__/
 results/
 factsheet/
 figs/
-model_zoo/team15_OMGROUTE/*
-!model_zoo/team15_OMGROUTE/team15_dat.txt
+model_zoo/team21_OMGROUTE/*
+!model_zoo/team21_OMGROUTE/team21_dat.txt
