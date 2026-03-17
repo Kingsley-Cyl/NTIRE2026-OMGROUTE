@@ -10,9 +10,6 @@ from pprint import pprint
 from utils import utils_logger
 from utils import utils_image as util
 
-import os
-os.environ["HT_ENDPOINT"] = "https://hf-mirror.com"
-
 
 def select_model(args, device):
     # Model ID is assigned according to the order of the submissions.
@@ -101,7 +98,3 @@ if __name__ == "__main__":
     pprint(args)
 
     main(args)
-
-'''
-CUDA_VISIBLE_DEVICES=6 python test.py --test_dir /home/jiacheng/Cyl/Dataset/NTIRE-2026-SR/test --save_dir ./results --model_id 21
-'''
