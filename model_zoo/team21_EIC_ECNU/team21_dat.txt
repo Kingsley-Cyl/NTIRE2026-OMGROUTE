@@ -2,4 +2,4 @@ You can see the pre-trainrd weights and test results from the following link:
 https://pan.baidu.com/s/13DVIDMyhsfyuyDO3qAL-fA?pwd=5b2x
 Password: 5b2x
 
-Please download the 'team21_ckpt.zip' file of the pre-trained weights to the 'model_zoo/team21_OMGROUTE' directory and then extract it directly.
+Please download the 'team21_ckpt.zip' file of the pre-trained weights to the 'model_zoo/EIC_ECNU' directory and then extract it directly.
