@@ -6,7 +6,7 @@ from .vaehook import VAEHook
 import time
 
 class OMGSR_S_Infer(torch.nn.Module):
-    def __init__(self, sd_path, lora_path_rect, lora_path_square, mid_timestep, device, weight_dtype):
+    def __init__(self, sd_path, lora_path_unknown, lora_path_bicubic, mid_timestep, device, weight_dtype):
         super().__init__()
         vae = AutoencoderKL.from_pretrained(sd_path, subfolder="vae")
         self.mid_timestep = mid_timestep
@@ -15,17 +15,17 @@ class OMGSR_S_Infer(torch.nn.Module):
         unet = UNet2DConditionModel.from_pretrained(sd_path, subfolder="unet")
         
         vae.encoder = PeftModel.from_pretrained(
-            vae.encoder, os.path.join(lora_path_rect, "vae_encoder_lora_adapter"), adapter_name="lora_rect"
+            vae.encoder, os.path.join(lora_path_unknown, "vae_encoder_lora_adapter"), adapter_name="lora_unknown"
         )
         unet = PeftModel.from_pretrained(
-            unet, os.path.join(lora_path_rect, "unet_lora_adapter"), adapter_name="lora_rect"
+            unet, os.path.join(lora_path_unknown, "unet_lora_adapter"), adapter_name="lora_unknown"
         )
         
         vae.encoder.load_adapter(
-            os.path.join(lora_path_square, "vae_encoder_lora_adapter"), adapter_name="lora_square"
+            os.path.join(lora_path_bicubic, "vae_encoder_lora_adapter"), adapter_name="lora_bicubic"
         )
         unet.load_adapter(
-            os.path.join(lora_path_square, "unet_lora_adapter"), adapter_name="lora_square"
+            os.path.join(lora_path_bicubic, "unet_lora_adapter"), adapter_name="lora_bicubic"
         )
         # 只有保留独立的适配器，才能在推理时动态切换。
         vae = vae.to(device=device, dtype=weight_dtype)
@@ -190,8 +190,8 @@ class OMGSR_S_Infer(torch.nn.Module):
         print(f"Inference time per image: {t}s")
         return pred_img, t 
 
-    def merge_current_lora(self, is_square=False):
-        active_adapter = "lora_square" if is_square else "lora_rect"
+    def merge_current_lora(self, is_bicubic=False):
+        active_adapter = "lora_bicubic" if is_bicubic else "lora_unknown"
         self.vae.encoder.set_adapter(active_adapter)
         self.unet.set_adapter(active_adapter)
         
